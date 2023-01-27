@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     ontologies_api_client (2.2.1)
-      activesupport (= 6.1.5.1)
+      activesupport (= 7.0.4.2)
       addressable (~> 2.8)
       excon
       faraday
@@ -16,12 +16,11 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.1.5.1)
+    activesupport (7.0.4.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -78,7 +77,6 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
-    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
