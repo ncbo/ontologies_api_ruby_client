@@ -6,7 +6,15 @@ module LinkedData
       attr_accessor :context, :links
 
       class << self
-        attr_accessor :media_type, :act_as_media_type, :include_attrs, :include_attrs_full, :attrs_always_present
+        attr_accessor :act_as_media_type, :include_attrs, :include_attrs_full, :attrs_always_present
+        def media_types
+          Array(@media_type)
+        end
+
+        def media_type
+          media_types.first
+        end
+
       end
 
       ##
@@ -31,8 +39,11 @@ module LinkedData
         map = {}
         classes = LinkedData::Client::Models.constants.map {|c| LinkedData::Client::Models.const_get(c)}
         classes.each do |media_type_cls|
-          next if map[media_type_cls] || !media_type_cls.respond_to?(:media_type) || !media_type_cls.ancestors.include?(LinkedData::Client::Base)
-          map[media_type_cls.media_type] = media_type_cls
+          next if map[media_type_cls] || !media_type_cls.respond_to?(:media_types) || !media_type_cls.ancestors.include?(LinkedData::Client::Base)
+          media_type_cls.media_types.each do |type|
+            next if map[type]
+            map[type] = media_type_cls
+          end
           media_type_cls.act_as_media_type.each {|mt| map[mt] = media_type_cls} if media_type_cls.act_as_media_type
         end
         return map
