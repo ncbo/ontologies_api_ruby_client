@@ -61,9 +61,15 @@ module LinkedData
 
         values = values.dup
         values = [values] unless values.is_a?(Array)
-        return url.gsub(/(\{.*?\})/) do
-          Addressable::URI.encode_component(values.shift, Addressable::URI::CharacterClasses::UNRESERVED)
+        escaped_value = Addressable::URI.encode_component(values.shift, Addressable::URI::CharacterClasses::UNRESERVED)
+        if url.match(/(\{.*?\})/)
+          url.gsub(/(\{.*?\})/) do
+            escaped_value
+          end
+        else
+          url + '/' + escaped_value
         end
+
       end
 
       def linkable_attributes
