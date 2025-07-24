@@ -41,7 +41,7 @@ class ClassTest < LinkedData::Client::TestCase
     refute_nil cls
 
     res = fetch_response(cls.purl)
-    assert_equal 200, res.status
+    assert_equal 200, res.status, "Response body: #{res.body}"
     assert_equal 'https://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=64572001',
                  res.env[:url].to_s
   end
