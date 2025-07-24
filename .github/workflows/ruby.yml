@@ -21,7 +21,7 @@ jobs:
       matrix:
         ruby-version: ['3.1']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
@@ -31,6 +31,12 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: set up config file
       run:  cp config/config.test.rb config/config.rb
+    - name: Check API key length
+      env:
+        UT_APIKEY: ${{ secrets.UT_APIKEY }}
+      run: |
+        echo "UT_APIKEY length: ${#UT_APIKEY}"
+        echo "UT_APIKEY starts with: ${UT_APIKEY:0:5}"
     - name: Run tests
       env:
         UT_APIKEY: ${{ secrets.UT_APIKEY }}
