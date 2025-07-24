@@ -13,5 +13,5 @@ LinkedData::Client.config do |config|
   config.links_attr  = 'links'
   config.purl_host   = 'purl.bioontology.org'
   config.purl_prefix = 'https://purl.bioontology.org/ontology'
-  config.cache       = false
+  config.cache       = true
 end
