@@ -1,20 +1,9 @@
 # frozen_string_literal: true
 
-require 'logger'
-require 'active_support'
-require 'active_support/logger'
-
 require 'minitest/autorun'
 require 'minitest/hooks/test'
 require_relative '../lib/ontologies_api_client'
 require_relative '../config/config'
-
-Logger = ::Logger unless defined?(Logger)
-module Rails
-  def self.cache
-    @cache ||= ActiveSupport::Cache::MemoryStore.new
-  end
-end
 
 module LinkedData
   module Client

@@ -67,13 +67,6 @@ module LinkedData
         LinkExplorer.new(@links, @instance)
       end
 
-      # def forward_explore(meth, *args)
-      #   sub_id = Array(args).find { |x| x.is_a?(String) } || ''
-      #   link = "#{@instance.id}/#{meth}/#{CGI.escape(sub_id)}".chomp('/')
-      #   @instance.id = link
-      #   LinkExplorer.new(@links, @instance)
-      # end
-
       def get_link(link, params, replacements = [], full_attributes = {})
         url = replace_template_elements(link.to_s, replacements)
         if link.respond_to? :media_type
