@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require 'faraday/follow_redirects'
 require_relative '../test_case'
 
 class ClassTest < LinkedData::Client::TestCase
+  @@purl_prefix = LinkedData::Client.settings.purl_prefix
+
   def test_find
     id = 'http://bioontology.org/ontologies/Activity.owl#Activity'
     ontology = 'https://data.bioontology.org/ontologies/BRO'
@@ -24,12 +25,13 @@ class ClassTest < LinkedData::Client::TestCase
       'https://data.bioontology.org/ontologies/BRO'
     )
     refute_nil cls
+    expected_purl = "#{@@purl_prefix}/BRO?conceptid=http%3A%2F%2Fbioontology.org%2Fontologies%2FActivity.owl%23Activity"
+    assert_equal expected_purl, cls.purl
 
     res = fetch_response(cls.purl)
-    assert_equal 200, res.status
-    assert_equal 'https://bioportal.bioontology.org/ontologies/BRO'\
-                 '?p=classes&conceptid=http%3A%2F%2Fbioontology.org%2Fontologies%2FActivity.owl%23Activity',
-                 res.env[:url].to_s
+    assert_equal 302, res.status
+    assert_equal 'https://bioportal.bioontology.org/ontologies/BRO/classes?conceptid=http%3A%2F%2Fbioontology.org%2Fontologies%2FActivity.owl%23Activity',
+                 res.headers['location']
   end
 
   # Test PURL generation for a class in a UMLS format ontology
@@ -40,10 +42,13 @@ class ClassTest < LinkedData::Client::TestCase
     )
     refute_nil cls
 
+    # The ID already contains the PURL host, so .purl should return it as-is
+    assert_equal cls.id, cls.purl
+
     res = fetch_response(cls.purl)
-    assert_equal 200, res.status
-    assert_equal 'https://bioportal.bioontology.org/ontologies/SNOMEDCT?p=classes&conceptid=64572001',
-                 res.env[:url].to_s
+    assert_equal 302, res.status
+    assert_equal 'https://bioportal.bioontology.org/ontologies/SNOMEDCT/classes/64572001',
+                 res.headers['location']
   end
 
   # Test PURL generation for a class in an OBO format ontology
@@ -54,20 +59,20 @@ class ClassTest < LinkedData::Client::TestCase
     )
     refute_nil cls
 
+    expected_purl = "#{@@purl_prefix}/DOID?conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FDOID_4"
+    assert_equal expected_purl, cls.purl
+
     res = fetch_response(cls.purl)
-    assert_equal 200, res.status
-    assert_equal 'https://bioportal.bioontology.org/ontologies/DOID'\
-                 '?p=classes&conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FDOID_4',
-                 res.env[:url].to_s
+    assert_equal 302, res.status
+    assert_equal 'https://bioportal.bioontology.org/ontologies/DOID/classes?conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FDOID_4',
+                 res.headers['location']
   end
 
   private
 
   def fetch_response(url)
-    conn = Faraday.new do |f|
-      f.response :follow_redirects
+    Faraday.new do |f|
       f.adapter Faraday.default_adapter
-    end
-    conn.get(url)
+    end.get(url)
   end
 end
