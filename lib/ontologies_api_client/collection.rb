@@ -24,15 +24,16 @@ module LinkedData
 
         ##
         # Get all top-level links for the API
-        def top_level_links
-          @top_level_links ||= HTTP.get(LinkedData::Client.settings.rest_url)
+        def top_level_links(link = LinkedData::Client.settings.rest_url)
+          @top_level_links ||= {}
+          @top_level_links[link] ||= HTTP.get(link)
         end
 
-        ##
+        #
         # Return a link given an object (with links) and a media type
         def uri_from_context(object, media_type)
           object.links.each do |type, link|
-            return link if link.media_type && link.media_type.downcase.eql?(media_type.downcase)
+            return link.dup if link.media_type && link.media_type.downcase.eql?(media_type.downcase)
           end
         end
 

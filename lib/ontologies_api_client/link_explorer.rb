@@ -11,11 +11,17 @@ module LinkedData
         @instance = instance
       end
 
+      def get(params = {})
+        get_link(@instance.id, params)
+      end
+
       def method_missing(meth, *args, &block)
         if combined_links.key?(meth.to_s)
           explore_link(meth, *args)
         elsif meth == :batch
           explore_link(args)
+        elsif !@instance.id.blank?
+          forward_explore(meth, *args)
         else
           super
         end
@@ -43,10 +49,7 @@ module LinkedData
           ids = link.map {|l| l.to_s}
           value_cls.where {|o| ids.include?(o.id)}
         else
-          url = replace_template_elements(link.to_s, replacements)
-          value_cls = LinkedData::Client::Base.class_for_type(link.media_type)
-          params[:include] ||= value_cls.attributes(full_attributes)
-          HTTP.get(url, params)
+          get_link(link, params, replacements, full_attributes)
         end
       end
 
@@ -55,6 +58,23 @@ module LinkedData
       end
 
       private
+
+      def forward_explore(meth, *args)
+        sub_id = Array(args).find { |x| x.is_a?(String) } || ''
+        escaped_sub_id = Addressable::URI.encode_component(sub_id, Addressable::URI::CharacterClasses::UNRESERVED)
+        link = "#{@instance.id}/#{meth}/#{escaped_sub_id}".chomp('/')
+        @instance.id = link
+        LinkExplorer.new(@links, @instance)
+      end
+
+      def get_link(link, params, replacements = [], full_attributes = {})
+        url = replace_template_elements(link.to_s, replacements)
+        if link.respond_to? :media_type
+          value_cls = LinkedData::Client::Base.class_for_type(link.media_type)
+          params[:include] ||= value_cls.attributes(full_attributes)
+        end
+        HTTP.get(url, params)
+      end
 
       def replace_template_elements(url, values = [])
         return url if values.nil? || values.empty?
