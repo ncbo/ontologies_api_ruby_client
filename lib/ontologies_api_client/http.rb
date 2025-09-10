@@ -144,16 +144,48 @@ module LinkedData
         response
       end
 
-      def self.delete(id)
-        puts "Deleting #{id}" if $DEBUG_API_CLIENT
-        response = conn.delete id
-        raise StandardError, response.body if response.status >= 500
-
-        response
-      end
-
       def self.object_from_json(json)
         recursive_struct(load_json(json))
+      end
+
+      def self.delete(path, params = {}, options = {})
+        headers = options[:headers] || {}
+        raw = options[:raw] || false # return response.body (string)
+        parse = options[:parse] || false # return parsed object (similar to 'get')
+
+        params = (params || {}).dup
+        params = params.delete_if { |k, v| v.nil? || v.to_s.empty? }
+
+        begin
+          puts "Deleting #{path} with #{params}" if $DEBUG_API_CLIENT
+          response = conn.delete do |req|
+            req.url path
+            req.params = params.dup
+            req.options[:timeout] = 60
+            req.headers.merge(headers)
+          end
+        rescue StandardError => e
+          query  = Faraday::Utils.build_query(params)
+          pretty = path.dup
+          pretty += '?' unless query.empty? || pretty.include?('?')
+          raise e, "Problem deleting:\n#{pretty}#{query}\n\nError: #{e.message}\n#{e.backtrace.join("\n\t")}"
+        end
+
+        raise StandardError, response.body if response.status >= 500
+
+        if raw
+          response.body
+        elsif parse
+          if response.respond_to?(:parsed_body) && response.parsed_body
+            obj = response.parsed_body
+            obj = obj.dup if obj.frozen?
+          else
+            obj = recursive_struct(load_json(response.body))
+          end
+          obj
+        else
+          response  # backward compatibility preserved
+        end
       end
 
       private
