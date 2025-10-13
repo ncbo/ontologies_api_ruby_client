@@ -6,4 +6,4 @@ gemspec
 
 gem 'pry'
 gem 'rake'
-gem 'rubocop', '~> 1.43'
+gem 'rubocop', '~> 1.81'
