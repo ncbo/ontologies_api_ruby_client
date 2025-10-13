@@ -58,7 +58,7 @@ GEM
     logger (1.6.5)
     lz4-ruby (0.3.3)
     method_source (1.1.0)
-    minitest (5.25.4)
+    minitest (5.26.0)
     minitest-hooks (1.5.2)
       minitest (> 5.3)
     multi_json (1.15.0)
@@ -111,7 +111,7 @@ PLATFORMS
 
 DEPENDENCIES
   faraday-follow_redirects (~> 0.3)
-  minitest (~> 5.25)
+  minitest (~> 5.26)
   minitest-hooks (~> 1.5)
   ontologies_api_client!
   pry
