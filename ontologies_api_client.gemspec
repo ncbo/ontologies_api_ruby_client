@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = LinkedData::Client::VERSION
 
-  gem.add_dependency('activesupport', '7.2.2.1')
+  gem.add_dependency('activesupport', '8.0.3')
   gem.add_dependency('addressable', '~> 2.8')
   gem.add_dependency('excon')
   gem.add_dependency('faraday')
