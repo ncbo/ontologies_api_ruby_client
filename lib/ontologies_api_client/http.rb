@@ -161,8 +161,8 @@ module LinkedData
           response = conn.delete do |req|
             req.url path
             req.params = params.dup
-            req.options[:timeout] = 60
-            req.headers.merge(headers)
+            req.options[:timeout] = options[:timeout] || 60
+            req.headers.merge!(headers)
           end
         rescue StandardError => e
           query  = Faraday::Utils.build_query(params)
