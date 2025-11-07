@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-
+require 'bundler/setup'
+require 'pry'
 require 'minitest/autorun'
 require 'minitest/hooks/test'
 require_relative '../lib/ontologies_api_client'
