@@ -9,19 +9,22 @@ name: Ruby
 
 on:
   push:
+    branches:
+      - '**'   # run on all branches
+    tags-ignore:
+      - '**'   # skip all tags
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         ruby-version: ['3.1']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
@@ -30,8 +33,13 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: set up config file
-      run:  cp config/config.test.rb config/config.rb
+      run: cp config/config.test.rb config/config.rb
     - name: Run tests
       env:
         UT_APIKEY: ${{ secrets.UT_APIKEY }}
       run: bundle exec rake test TESTOPTS="-v"
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        flags: ${{ matrix.ruby-version }}
+        verbose: true
