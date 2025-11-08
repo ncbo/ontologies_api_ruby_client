@@ -1,9 +1,12 @@
 *.gem
 .DS_Store
-config/config.rb
+/config/config.rb
 
 # Specific to IntelliJ
 .idea/
 
 # Specific to rbenv
 .ruby-version
+
+# Codecov local cache
+/coverage/
