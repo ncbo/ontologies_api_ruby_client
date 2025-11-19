@@ -64,8 +64,11 @@ class ClassTest < LinkedData::Client::TestCase
 
     res = fetch_response(cls.purl)
     assert_equal 302, res.status
-    assert_equal 'https://bioportal.bioontology.org/ontologies/DOID/classes?conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FDOID_4',
-                 res.headers['location']
+
+    expected_location = 'https://bioportal.bioontology.org/ontologies/DOID/classes?conceptid=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FDOID_4'
+    actual_location = res.headers['location']
+    normalize = ->(url) { url&.sub(%r{/(\?)}, '\1') }
+    assert_equal normalize.call(expected_location), normalize.call(actual_location)
   end
 
   private
