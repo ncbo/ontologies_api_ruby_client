@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ontologies_api_client (2.7.1)
+    ontologies_api_client (2.8.0)
       activesupport (= 8.0.3)
       addressable (~> 2.8)
       excon
