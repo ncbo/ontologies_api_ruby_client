@@ -157,5 +157,4 @@ For questions please email [support@bioontology.org](support@bioontology.org.)
 </a>
 
 ## License
-
-This project is licensed under the [FreeBSD License](LICENSE.txt) © 2026 The Board of Trustees of Leland Stanford Junior University.
+The 2-Clause BSD License. See [LICENSE.txt](LICENSE.txt) for more information.
