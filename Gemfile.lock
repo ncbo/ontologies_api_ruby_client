@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    ontologies_api_client (2.7.1)
-      activesupport (= 7.2.2.1)
+    ontologies_api_client (2.8.0)
+      activesupport (= 8.0.3)
       addressable (~> 2.8)
       excon
       faraday
@@ -15,7 +15,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.2.2.1)
+    activesupport (8.0.3)
       base64
       benchmark (>= 0.3)
       bigdecimal
@@ -27,6 +27,7 @@ GEM
       minitest (>= 5.1)
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
+      uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     ast (2.4.3)
@@ -61,13 +62,13 @@ GEM
     logger (1.7.0)
     lz4-ruby (0.3.3)
     method_source (1.1.0)
-    minitest (5.26.0)
+    minitest (5.26.2)
     minitest-hooks (1.5.2)
       minitest (> 5.3)
     multi_json (1.17.0)
     multipart-post (2.4.1)
-    net-http (0.7.0)
-      uri
+    net-http (0.8.0)
+      uri (>= 0.11.1)
     oj (3.16.12)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
@@ -97,7 +98,7 @@ GEM
       rubocop-ast (>= 1.47.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.47.1)
+    rubocop-ast (1.48.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
     ruby-progressbar (1.13.0)
@@ -119,19 +120,19 @@ GEM
     uri (1.1.1)
 
 PLATFORMS
-  arm64-darwin-23
+  arm64-darwin-24
   ruby
 
 DEPENDENCIES
   faraday-follow_redirects (~> 0.3)
-  minitest (~> 5.25)
+  minitest (~> 5.26)
   minitest-hooks (~> 1.5)
   ontologies_api_client!
   pry
   rake
-  rubocop (~> 1.43)
+  rubocop (~> 1.81)
   simplecov
   simplecov-cobertura
 
 BUNDLED WITH
-   2.6.9
+   2.7.2

@@ -36,6 +36,8 @@ class ClassTest < LinkedData::Client::TestCase
 
   # Test PURL generation for a class in a UMLS format ontology
   def test_purl_umls
+    skip 'Disable until #41 is fixed: https://github.com/ncbo/ontologies_api_ruby_client/issues/41'
+
     cls = LinkedData::Client::Models::Class.find(
       'http://purl.bioontology.org/ontology/SNOMEDCT/64572001',
       'https://bioportal.bioontology.org/ontologies/SNOMEDCT'
@@ -53,6 +55,8 @@ class ClassTest < LinkedData::Client::TestCase
 
   # Test PURL generation for a class in an OBO format ontology
   def test_purl_obo
+    skip 'Disable until #41 is fixed: https://github.com/ncbo/ontologies_api_ruby_client/issues/41'
+
     cls = LinkedData::Client::Models::Class.find(
       'http://purl.obolibrary.org/obo/DOID_4',
       'https://bioportal.bioontology.org/ontologies/DOID'

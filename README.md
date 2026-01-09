@@ -151,6 +151,10 @@ Resources that should have save, update, and delete methods will need to include
 
 For questions please email [support@bioontology.org](support@bioontology.org.)
 
-## License
+## Contributors
+<a href="https://github.com/ncbo/ontologies_api_ruby_client/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ncbo/ontologies_api_ruby_client" />
+</a>
 
-This project is licensed under the [FreeBSD License](LICENSE.txt) © 2025 The Board of Trustees of Leland Stanford Junior University.
+## License
+The 2-Clause BSD License. See [LICENSE.txt](LICENSE.txt) for more information.
