@@ -1,6 +1,7 @@
 module LinkedData::Client
   class Analytics
     HTTP = LinkedData::Client::HTTP
+    LOGGER = Logger.new($stdout)
 
     attr_accessor :onts, :date
 
@@ -18,7 +19,11 @@ module LinkedData::Client
       analytics.delete(:context)
       onts = []
       analytics.keys.each do |ont|
-        views = analytics[ont][:"#{year_num}"][:"#{month_num}"]
+        views = analytics.dig(ont, :"#{year_num}", :"#{month_num}")
+        if views.nil?
+          LOGGER.debug("Analytics data missing for ontology: #{ont}, year: #{year_num}, month: #{month_num}")
+          views = 0
+        end
         onts << {ont: ont, views: views}
       end
       data.onts = onts
