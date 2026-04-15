@@ -20,6 +20,8 @@ class ClassTest < LinkedData::Client::TestCase
 
   # Test PURL generation for a class in an OWL format ontology
   def test_purl_owl
+    skip 'Disable until #41 is fixed: https://github.com/ncbo/ontologies_api_ruby_client/issues/41'
+
     cls = LinkedData::Client::Models::Class.find(
       'http://bioontology.org/ontologies/Activity.owl#Activity',
       'https://data.bioontology.org/ontologies/BRO'
