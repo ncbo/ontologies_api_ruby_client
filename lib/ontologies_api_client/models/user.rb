@@ -9,7 +9,12 @@ module LinkedData
         include LinkedData::Client::ReadWrite
 
         @media_type = "http://data.bioontology.org/metadata/User"
-        @include_attrs = "all"
+        @include_attrs = "username,email,role,firstName,lastName,created"
+
+        def self.all(*args)
+          params = args.shift || {}
+          super({ display_context: false, display_links: false }.merge(params), *args)
+        end
 
         def self.authenticate(user, password)
           auth_params = {user: user, password: password, include: "all"}
