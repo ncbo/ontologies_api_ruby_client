@@ -8,9 +8,9 @@ module LinkedData
       class Class < LinkedData::Client::Base
         HTTP = LinkedData::Client::HTTP
         @media_type = %w[http://www.w3.org/2002/07/owl#Class http://www.w3.org/2004/02/skos/core#Concept]
-        @include_attrs = "prefLabel,definition,synonym,obsolete,hasChildren"
-        @include_attrs_full = "prefLabel,definition,synonym,obsolete,properties,hasChildren,children"
-        @attrs_always_present = :prefLabel, :definition, :synonym, :obsolete, :properties, :hasChildren, :children
+        @include_attrs = "prefLabel,definition,synonym,obsolete,hasChildren,inScheme,memberOf"
+        @include_attrs_full = "prefLabel,definition,synonym,obsolete,properties,hasChildren,childre,inScheme,memberOf"
+        @attrs_always_present = :prefLabel, :definition, :synonym, :obsolete, :properties, :hasChildren, :children, :inScheme, :memberOf
 
         alias :fullId :id
 

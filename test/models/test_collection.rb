@@ -84,4 +84,18 @@ class CollectionTest < LinkedData::Client::TestCase
     ont = TestOntology.find('https://data.bioontology.org/ontologies/SNOMEDCT')
     refute_nil ont
   end
+
+  def test_get
+    ont = TestOntology.get('https://data.bioontology.org/ontologies/SNOMEDCT')
+    refute_nil ont
+    assert_instance_of LinkedData::Client::Models::Ontology, ont
+    assert_equal 'https://data.bioontology.org/ontologies/SNOMEDCT', ont.id
+    assert_equal 'SNOMEDCT', ont.acronym
+
+    ont = TestOntology.get('SNOMEDCT')
+    refute_nil ont
+    assert_instance_of LinkedData::Client::Models::Ontology, ont
+    assert_equal 'https://data.bioontology.org/ontologies/SNOMEDCT', ont.id
+    assert_equal 'SNOMEDCT', ont.acronym
+  end
 end

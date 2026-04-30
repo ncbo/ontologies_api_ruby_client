@@ -1,5 +1,22 @@
 # frozen_string_literal: true
+# Start simplecov if this is a coverage task or if it is run in the CI pipeline
+if ENV['COVERAGE'] || ENV['CI']
+  require 'simplecov'
+  require 'simplecov-cobertura'
 
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::CoberturaFormatter, # writes coverage/cobertura.xml
+  ])
+
+  SimpleCov.start do
+    enable_coverage :branch
+    add_filter %w[/test/ /config/]
+  end
+end
+
+require 'bundler/setup'
+require 'pry'
 require 'minitest/autorun'
 require 'minitest/hooks/test'
 require_relative '../lib/ontologies_api_client'
