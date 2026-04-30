@@ -6,4 +6,6 @@ gemspec
 
 gem 'pry'
 gem 'rake'
-gem 'rubocop', '~> 1.43'
+gem 'rubocop', '~> 1.81'
+gem 'simplecov', require: false
+gem 'simplecov-cobertura', require: false

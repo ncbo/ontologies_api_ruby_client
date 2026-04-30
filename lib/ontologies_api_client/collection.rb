@@ -26,15 +26,16 @@ module LinkedData
 
         ##
         # Get all top-level links for the API
-        def top_level_links
-          HTTP.get(LinkedData::Client.settings.rest_url)
+        def top_level_links(link = LinkedData::Client.settings.rest_url)
+          @top_level_links ||= {}
+          @top_level_links[link] ||= HTTP.get(link)
         end
 
-        ##
+        #
         # Return a link given an object (with links) and a media type
         def uri_from_context(object, media_type)
           object.links.each do |type, link|
-            return link if link.media_type && link.media_type.downcase.eql?(media_type.downcase)
+            return link.dup if link.media_type && link.media_type.downcase.eql?(media_type.downcase)
           end
         end
 
@@ -80,18 +81,18 @@ module LinkedData
           end
         end
 
-        ##
         # Find a resource by id
+        #
+        # @deprecated Use {#get} instead
         def find(id, params = {})
-          found = where do |obj|
-            obj.id.eql?(id)
-          end
-          found.first
+          get(id, params)
         end
 
         ##
         # Get a resource by id (this will retrieve it from the REST service)
         def get(id, params = {})
+          path = collection_path
+          id = "#{path}/#{id}" unless id.include?(path)
           HTTP.get(id, params)
         end
 

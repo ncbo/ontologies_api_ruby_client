@@ -2,6 +2,6 @@
 
 module LinkedData
   module Client
-    VERSION = '2.2.5'
+    VERSION = '2.8.1'
   end
 end
