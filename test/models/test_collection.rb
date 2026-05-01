@@ -42,6 +42,30 @@ class CollectionTest < LinkedData::Client::TestCase
     end
   end
 
+  # Back-compat invariant: when an endpoint returns a flat Array (i.e. it
+  # hasn't been paginated yet — e.g. /ontologies, /groups, /categories
+  # today), Collection#all must pass the response through unchanged. This
+  # is what keeps non-paginated endpoints working after this gem's
+  # auto-flatten change. Guards against future refactors of the page-walk
+  # logic accidentally breaking the non-paged path; complements the
+  # network-dependent `test_all` which would only catch the regression
+  # against a live API.
+  def test_all_passes_through_array_response
+    array_response = [OpenStruct.new(id: 'a'), OpenStruct.new(id: 'b'), OpenStruct.new(id: 'c')]
+    calls = []
+
+    TestOntology.stub(:entry_point, ->(_media_type, params) {
+      calls << params
+      array_response
+    }) do
+      assert_same array_response, TestOntology.all
+    end
+
+    # Sanity: pagesize is still injected on the request — the API simply
+    # ignores it and returns an Array, which we hand back as-is.
+    assert_equal [{ pagesize: 5_000 }], calls
+  end
+
   def test_user_all_uses_lightweight_defaults
     calls = []
 
