@@ -10,6 +10,8 @@ module LinkedData
       end
 
       module ClassMethods
+        PAGED_COLLECTION_SIZE = 5_000
+
         ##
         # Allows for arbitrary find_by methods. For example:
         #   Ontology.find_by_acronym("BRO")
@@ -54,7 +56,12 @@ module LinkedData
         # Get all resources from the base collection for a resource
         def all(*args)
           params = args.shift || {}
-          entry_point(@media_type, params)
+          request_params = collection_request_params(params)
+          response = entry_point(@media_type, request_params)
+
+          return response if page_requested?(params) || !paged_collection?(response)
+
+          all_pages(response, request_params)
         end
 
         ##
@@ -113,6 +120,49 @@ module LinkedData
             end
             bools.all?
           end
+        end
+
+        private
+
+        def all_pages(first_page, params)
+          collection = Array(first_page.collection)
+          next_page = first_page.nextPage
+
+          while next_page
+            page = entry_point(@media_type, next_page_params(params, next_page))
+            collection.concat(Array(page.collection))
+            next_page = page.nextPage
+          end
+
+          collection
+        end
+
+        def collection_request_params(params)
+          return params if page_requested?(params) || page_size_requested?(params)
+
+          params.merge(pagesize: PAGED_COLLECTION_SIZE)
+        end
+
+        def next_page_params(params, page)
+          page_params = params.dup
+          page_params[page_params.key?("page") ? "page" : :page] = page
+          page_params[:pagesize] = PAGED_COLLECTION_SIZE unless page_size_requested?(page_params)
+          page_params
+        end
+
+        def page_requested?(params)
+          params.key?(:page) || params.key?("page")
+        end
+
+        def page_size_requested?(params)
+          params.key?(:pagesize) || params.key?("pagesize")
+        end
+
+        def paged_collection?(response)
+          response.respond_to?(:collection) &&
+            response.respond_to?(:pageCount) &&
+            response.respond_to?(:nextPage) &&
+            response.collection.is_a?(Array)
         end
       end
     end
