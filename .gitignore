@@ -5,8 +5,5 @@
 # Specific to IntelliJ
 .idea/
 
-# Specific to rbenv
-.ruby-version
-
 # Codecov local cache
 /coverage/
