@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = 'ontologies_api_client'
   gem.require_paths = ['lib']
+  gem.required_ruby_version = '>= 3.4', '< 3.5'
   gem.version       = LinkedData::Client::VERSION
 
   gem.add_dependency('activesupport', '8.0.3')
