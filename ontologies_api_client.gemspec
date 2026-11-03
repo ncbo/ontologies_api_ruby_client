@@ -29,6 +29,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('oj')
 
   gem.add_development_dependency('faraday-follow_redirects', '~> 0.3')
-  gem.add_development_dependency('minitest', '~> 5.26')
-  gem.add_development_dependency('minitest-hooks', '~> 1.5')
+  gem.add_development_dependency('minitest', '~> 6.0')
+  gem.add_development_dependency('minitest-hooks', '~> 1.5.4')
+  gem.add_development_dependency('minitest-mock', '~> 5.27')
 end

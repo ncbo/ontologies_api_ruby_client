@@ -73,11 +73,12 @@ module LinkedData
         # Gets the properties from the REST API and then returns a tree
         def property_tree
           properties = Hash[self.explore.properties.map { |p| [p.id, p] }]
-          properties.each_key do |key|
-            prop = properties[key]
-            prop.parents.each { |par| properties[par].children << prop if properties[par] }
+          roots = []
+          properties.each_value do |prop|
+            parents = prop.parents.reject { |par| par == prop.id }
+            roots << prop if parents.empty?
+            parents.each { |par| properties[par].children << prop if properties[par] }
           end
-          roots = properties.values.select { |p| p.parents.empty? }
           root = LinkedData::Client::Models::Property.new
           root.children = roots
           root
