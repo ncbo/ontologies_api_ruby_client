@@ -2,11 +2,11 @@ require_relative '../test_case'
 
 class LinkExploreTest < LinkedData::Client::TestCase
   def test_explore
-    sub_direct_explore = LinkedData::Client::Models::Ontology.explore('MEDDRA')
+    sub_direct_explore = LinkedData::Client::Models::Ontology.explore('SNOMEDCT')
                                                              .latest_submission
                                                              .get(include: 'all')
 
-    sub_indirect_explore = LinkedData::Client::Models::Ontology.find('MEDDRA').explore.latest_submission
+    sub_indirect_explore = LinkedData::Client::Models::Ontology.find('SNOMEDCT').explore.latest_submission
 
     refute_nil sub_direct_explore
     refute_nil sub_indirect_explore
