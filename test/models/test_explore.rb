@@ -1,11 +1,4 @@
 require_relative '../test_case'
-require 'pry'
-
-module Models
-  def self.method_missing
-    binding.pry
-  end
-end
 
 class LinkExploreTest < LinkedData::Client::TestCase
   def test_explore
