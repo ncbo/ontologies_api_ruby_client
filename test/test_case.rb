@@ -19,6 +19,7 @@ require 'bundler/setup'
 require 'pry'
 require 'minitest/autorun'
 require 'minitest/hooks/test'
+require 'minitest/mock'
 require_relative '../lib/ontologies_api_client'
 require_relative '../config/config'
 
