@@ -39,12 +39,16 @@ module LinkedData
           self.childrenCount > 0
         end
 
-        def to_hash
-          hash = super
+        def to_hash(ancestors = [])
+          hash = super()
           hash[:prefLabel] = self.prefLabel
-          hash[:childrenCount] = self.childrenCount
+
+          # Track only the current path so shared descendants appear under each parent.
+          path = ancestors + [object_id]
+          child_properties = children.reject { |p| path.include?(p.object_id) }
+          hash[:childrenCount] = child_properties.length
           if children.length > 0
-            hash[:children] = self.children.map {|p| p.to_hash}
+            hash[:children] = child_properties.map { |p| p.to_hash(path) }
           end
           hash
         end
