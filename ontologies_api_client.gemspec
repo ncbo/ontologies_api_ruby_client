@@ -24,7 +24,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('faraday')
   gem.add_dependency('faraday-excon')
   gem.add_dependency('faraday-multipart')
-  gem.add_dependency('lz4-ruby')
+  gem.add_dependency('lz4_flex', '~> 1.1.2')
   gem.add_dependency('multi_json')
   gem.add_dependency('oj')
 
