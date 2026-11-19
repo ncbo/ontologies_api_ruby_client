@@ -1,6 +1,6 @@
 require 'digest/sha1'
 require 'active_support/cache'
-require 'lz4-ruby'
+require 'lz4_flex'
 require_relative '../http'
 
 module Faraday
@@ -167,8 +167,8 @@ module Faraday
     ##
     # Compress cache entry
     def cache_write_compressed(key, obj, *args)
-      compressed = LZ4::compress(Marshal.dump(obj))
-      return if compressed.nil?
+      # Keep the size-prefixed block format used by existing cache entries.
+      compressed = Lz4Flex::VarInt.compress(Marshal.dump(obj))
       placeholder = CompressedMemcache.new
       placeholder.key = "#{key}::#{(Time.now.to_f * 1000).to_i}::LZ4"
       begin
@@ -187,7 +187,7 @@ module Faraday
       obj = @store.read(key)
       if obj.is_a?(CompressedMemcache)
         begin
-          uncompressed = LZ4::uncompress(@store.read(obj.key))
+          uncompressed = Lz4Flex::VarInt.decompress(@store.read(obj.key))
           obj = Marshal.load(uncompressed)
         rescue StandardError => e
           # There is a problem with the stored value, let's remove it so we don't get the error again
