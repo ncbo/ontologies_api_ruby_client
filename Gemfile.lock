@@ -91,6 +91,7 @@ GEM
       reline (>= 0.6.0)
     public_suffix (7.0.5)
     racc (1.8.1)
+    rack (3.2.9)
     rainbow (3.1.1)
     rake (13.4.2)
     rake-compiler-dock (1.12.0)
@@ -145,6 +146,7 @@ DEPENDENCIES
   minitest-mock (~> 5.27)
   ontologies_api_client!
   pry
+  rack (~> 3.2.9)
   rake
   rubocop (~> 1.81)
   simplecov
@@ -193,6 +195,7 @@ CHECKSUMS
   pry (0.16.0) sha256=d76c69065698ed1f85e717bd33d7942c38a50868f6b0673c636192b3d1b6054e
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
+  rack (3.2.9) sha256=8235c1d08f0c461bedcff4413bbeba888173e5b09e1332ae951c98f0ee460dcc
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   rake-compiler-dock (1.12.0) sha256=f13205c2738f3d2053afcd03491a9e4541b22a59a0bfc53fc8bc883bd8188023

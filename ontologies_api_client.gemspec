@@ -32,4 +32,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency('minitest', '~> 6.0')
   gem.add_development_dependency('minitest-hooks', '~> 1.5.4')
   gem.add_development_dependency('minitest-mock', '~> 5.27')
+  gem.add_development_dependency('rack', '~> 3.2.9')
 end
