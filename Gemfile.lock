@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ontologies_api_client (2.9.2)
+    ontologies_api_client (2.9.3)
       activesupport (= 8.0.3)
       addressable (~> 2.8)
       excon
@@ -91,6 +91,7 @@ GEM
       reline (>= 0.6.0)
     public_suffix (7.0.5)
     racc (1.8.1)
+    rack (3.2.9)
     rainbow (3.1.1)
     rake (13.4.2)
     rake-compiler-dock (1.12.0)
@@ -145,6 +146,7 @@ DEPENDENCIES
   minitest-mock (~> 5.27)
   ontologies_api_client!
   pry
+  rack (~> 3.2.9)
   rake
   rubocop (~> 1.81)
   simplecov
@@ -185,7 +187,7 @@ CHECKSUMS
   multipart-post (2.4.1) sha256=9872d03a8e552020ca096adadbf5e3cb1cd1cdd6acd3c161136b8a5737cdb4a8
   net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
   oj (3.17.0) sha256=5684b2127fb70e650fae90df521b91336ff8e55e2e1011ed80eb0283beac5360
-  ontologies_api_client (2.9.2)
+  ontologies_api_client (2.9.3)
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   parallel (1.28.0) sha256=33e6de1484baf2524792d178b0913fc8eb94c628d6cfe45599ad4458c638c970
   parser (3.3.11.1) sha256=d17ace7aabe3e72c3cc94043714be27cc6f852f104d81aa284c2281aecc65d54
@@ -193,6 +195,7 @@ CHECKSUMS
   pry (0.16.0) sha256=d76c69065698ed1f85e717bd33d7942c38a50868f6b0673c636192b3d1b6054e
   public_suffix (7.0.5) sha256=1a8bb08f1bbea19228d3bed6e5ed908d1cb4f7c2726d18bd9cadf60bc676f623
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
+  rack (3.2.9) sha256=8235c1d08f0c461bedcff4413bbeba888173e5b09e1332ae951c98f0ee460dcc
   rainbow (3.1.1) sha256=039491aa3a89f42efa1d6dec2fc4e62ede96eb6acd95e52f1ad581182b79bc6a
   rake (13.4.2) sha256=cb825b2bd5f1f8e91ca37bddb4b9aaf345551b4731da62949be002fa89283701
   rake-compiler-dock (1.12.0) sha256=f13205c2738f3d2053afcd03491a9e4541b22a59a0bfc53fc8bc883bd8188023

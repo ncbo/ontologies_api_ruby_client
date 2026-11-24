@@ -196,7 +196,7 @@ module LinkedData
         if file
           # multipart
           boundary = 'OntologiesAPIMultipartPost'
-          req.headers['Content-Type'] = "multipart/mixed; boundary=#{boundary}; type=application/json; start=json"
+          req.headers['Content-Type'] = "multipart/mixed; boundary=#{boundary}; type=\"application/json\"; start=json"
           parts = []
           parts << Faraday::Parts::Part.new(boundary, "json\"\r\nContent-Type: \"application/json; charset=UTF-8", MultiJson.dump(obj))
           parts << Faraday::Parts::Part.new(boundary, file_attribute, file)
